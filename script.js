@@ -15,11 +15,15 @@
 const cardList = document.querySelector(".card-list");
 
 let personData = [];
+let personCount = 8;
 
-getPersonData();
+getPersonData(personCount);
 
-function getPersonData() {
-  fetch("https://dummy-apis.netlify.app/api/contact-suggestions?count=8")
+function getPersonData(personCount) {
+  fetch(
+    "https://dummy-apis.netlify.app/api/contact-suggestions?count=" +
+      personCount
+  )
     .then((res) => res.json())
     .then((data) => (personData = data))
     .then(() => personData.forEach((element) => createPersonCard(element)));
@@ -41,8 +45,6 @@ function createPersonCard(personData) {
   const mutualConnections = getMutualConnections(personData);
   const connectButton = addConnectButton();
   const removeButton = addRemoveButton();
-
-  test;
 
   personCard.style.backgroundImage = `url("${personData.backgroundImage}"), url("./images/profile_bg_image_default.png")`;
 
@@ -109,4 +111,5 @@ function addRemoveButton() {
 
 function removeCard(event) {
   cardList.removeChild(event.target.parentElement);
+  getPersonData(1);
 }
