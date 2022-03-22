@@ -42,19 +42,16 @@ function createPersonCard(personData) {
   const connectButton = addConnectButton();
   const removeButton = addRemoveButton();
 
-  personCard.style.backgroundImage =
-    "url(" +
-    personData.backgroundImage +
-    ")" +
-    "," +
-    "url(./images/profile_bg_image_default.png)";
+  personCard.style.backgroundImage = `url("${personData.backgroundImage}"), url("./images/profile_bg_image_default.png")`;
 
-  personCard.appendChild(personPicture);
-  personCard.appendChild(personName);
-  personCard.appendChild(personTitle);
-  personCard.appendChild(mutualConnections);
-  personCard.appendChild(connectButton);
-  personCard.appendChild(removeButton);
+  personCard.append(
+    personPicture,
+    personName,
+    personTitle,
+    mutualConnections,
+    connectButton,
+    removeButton
+  );
 
   cardList.appendChild(personCard);
 }
@@ -109,5 +106,5 @@ function addRemoveButton() {
 }
 
 function removeCard(event) {
-  console.log(event.target);
+  cardList.removeChild(event.target.parentElement);
 }
