@@ -42,6 +42,8 @@ function createPersonCard(personData) {
   const connectButton = addConnectButton();
   const removeButton = addRemoveButton();
 
+  test;
+
   personCard.style.backgroundImage = `url("${personData.backgroundImage}"), url("./images/profile_bg_image_default.png")`;
 
   personCard.append(
