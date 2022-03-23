@@ -1,16 +1,14 @@
-/*todo
--when card gets removed -> check for "pending" or "connect" ? 
-*/
-
 const cardList = document.querySelector(".card-list");
 
 let personData = [];
 let numberOfInvitations = 0;
 
+//inital function call
 getPersonData(8);
 getStoredNumberOfInvitations();
 renderPendingInvitations(numberOfInvitations);
 
+//fetch person data from API > push to personData[] > call function for creating person-cards
 function getPersonData(personCount) {
   fetch(
     "https://dummy-apis.netlify.app/api/contact-suggestions?count=" +
@@ -25,6 +23,7 @@ function getPersonData(personCount) {
     .then(() => personData.forEach((element) => createPersonCard(element)));
 }
 
+//creates person-card with data from API, uses helper functions
 function createPersonCard(personData) {
   const personCard = document.createElement("li");
   personCard.setAttribute("class", "person-card");
@@ -50,12 +49,14 @@ function createPersonCard(personData) {
   cardList.appendChild(personCard);
 }
 
+//helper function to set multiple attributes
 function setAttributes(element, attributes) {
   for (let key in attributes) {
     element.setAttribute(key, attributes[key]);
   }
 }
 
+//creates image element for person-card
 function getPersonPicture(personData) {
   const personPicture = document.createElement("img");
   setAttributes(personPicture, {
@@ -66,6 +67,7 @@ function getPersonPicture(personData) {
   return personPicture;
 }
 
+//creates name element for person-card
 function getPersonName(personData) {
   const personName = document.createElement("h3");
   personName.innerText = personData.name.first + "  " + personData.name.last;
@@ -73,6 +75,7 @@ function getPersonName(personData) {
   return personName;
 }
 
+//creates title for person-card
 function getPersonTitle(personData) {
   const personTitle = document.createElement("h4");
   personTitle.innerText = personData.title;
@@ -80,6 +83,7 @@ function getPersonTitle(personData) {
   return personTitle;
 }
 
+//creates text for mutual connections
 function getMutualConnections(personData) {
   const mutualConnections = document.createElement("p");
   mutualConnections.innerText = ` ${personData.mutualConnections} mutual connections`;
@@ -87,6 +91,7 @@ function getMutualConnections(personData) {
   return mutualConnections;
 }
 
+//creates connect button witch can call connectWithPerson()
 function addConnectButton() {
   const connectButton = document.createElement("button");
   connectButton.classList.add("connect-button");
@@ -95,6 +100,7 @@ function addConnectButton() {
   return connectButton;
 }
 
+//creates remove button which can call removeCard()
 function addRemoveButton() {
   const removeButton = document.createElement("button");
   removeButton.classList.add("remove-button");
@@ -103,11 +109,13 @@ function addRemoveButton() {
   return removeButton;
 }
 
+//removes card that got targeted
 function removeCard(event) {
   cardList.removeChild(event.target.parentElement);
   getPersonData(1);
 }
 
+//toggles text of connect-button and in- / decrements numberOfInvitations-Counter
 function connectWithPerson(event) {
   const button = event.target;
   if (button.innerText === "Connect") {
@@ -122,6 +130,7 @@ function connectWithPerson(event) {
   renderPendingInvitations(numberOfInvitations);
 }
 
+//stores the number of invitations in local storage
 function storeNumberOfInvitations(numberOfInvitations) {
   localStorage.setItem(
     "numberOfInvitations",
@@ -129,6 +138,7 @@ function storeNumberOfInvitations(numberOfInvitations) {
   );
 }
 
+//gets the number of invitations from local storage
 function getStoredNumberOfInvitations() {
   const inivitationsNumber = JSON.parse(
     localStorage.getItem("numberOfInvitations")
@@ -140,6 +150,7 @@ function getStoredNumberOfInvitations() {
   }
 }
 
+//renders text with number of pending invitations
 function renderPendingInvitations(numberOfInvitations) {
   const pendingInvitationsText = document.querySelector(
     "#pending-invitations__text"
