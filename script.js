@@ -1,6 +1,5 @@
 /*todo
 - helper function for mutual connections
---> when just 1 then logo
 --> when more -> two rings symbol + n + "mutual connections"
 
 -helper function for background image
@@ -8,23 +7,43 @@
 --> when image -> use image
 */
 
-/*for (let i = 0; i <= 7; i++) {
-  getPersonData();
-}*/
-
 const cardList = document.querySelector(".card-list");
 
 let personData = [];
-let personCount = 8;
+let numberOfInvitations = 0;
 
-getPersonData(personCount);
+getStoredNumberOfInvitations();
+function getStoredNumberOfInvitations() {
+  const inivitationsNumber = JSON.parse(
+    localStorage.getItem("numberOfInvitations")
+  );
+  numberOfInvitations = inivitationsNumber;
+}
+getPersonData(8);
+renderPendingInvitations(numberOfInvitations);
+
+function renderPendingInvitations(numberOfInvitations) {
+  const pendingInvitationsText = document.querySelector(
+    "#pending-invitations__text"
+  );
+  if (numberOfInvitations === 0) {
+    pendingInvitationsText.innerText = "No pending invitations";
+  } else if (numberOfInvitations > 0) {
+    pendingInvitationsText.innerText = `${numberOfInvitations} pending Invitations`;
+  }
+  storeNumberOfInvitations(numberOfInvitations);
+}
 
 function getPersonData(personCount) {
   fetch(
     "https://dummy-apis.netlify.app/api/contact-suggestions?count=" +
       personCount
   )
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
     .then((data) => (personData = data))
     .then(() => personData.forEach((element) => createPersonCard(element)));
 }
@@ -95,6 +114,7 @@ function addConnectButton() {
   const connectButton = document.createElement("button");
   connectButton.setAttribute("class", "connect-button");
   connectButton.innerText = "Connect";
+  connectButton.addEventListener("click", connectWithPerson);
   return connectButton;
 }
 
@@ -102,14 +122,32 @@ function addRemoveButton() {
   const removeButton = document.createElement("button");
   removeButton.setAttribute("class", "remove-button");
   removeButton.innerText = "X";
-  removeButton.addEventListener("click", function (event) {
-    //warum kann ich nicht einfach ("click", removeCard(event)) schreiben?
-    removeCard(event);
-  });
+  removeButton.addEventListener("click", removeCard);
   return removeButton;
 }
 
 function removeCard(event) {
   cardList.removeChild(event.target.parentElement);
   getPersonData(1);
+}
+
+function connectWithPerson(event) {
+  const button = event.target;
+  if (button.innerText === "Connect") {
+    button.innerText = "Pending";
+    numberOfInvitations++;
+    renderPendingInvitations(numberOfInvitations);
+  } else if (button.innerText === "Pending") {
+    button.innerText = "Connect";
+    numberOfInvitations--;
+    renderPendingInvitations(numberOfInvitations);
+  }
+  renderPendingInvitations(numberOfInvitations);
+}
+
+function storeNumberOfInvitations(numberOfInvitations) {
+  localStorage.setItem(
+    "numberOfInvitations",
+    JSON.stringify(numberOfInvitations)
+  );
 }

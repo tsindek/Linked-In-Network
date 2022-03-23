@@ -15,15 +15,23 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px dotted skyblue;
+}
+
 .container-card {
   padding: 0.5rem;
+  border: 2px solid salmon;
 }
 
 .card-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  border: 2px solid red;
+  border: 2px dotted red;
   margin: 0;
   padding: 0;
 }
