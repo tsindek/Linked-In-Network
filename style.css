@@ -3,7 +3,6 @@
 *::before {
   box-sizing: border-box;
 }
-
 html,
 body {
   height: 100%;
@@ -21,6 +20,25 @@ main {
   align-items: center;
 }
 
+/************************************************************************/
+:root {
+  --c-bg-primary: #f3f2ef;
+  --c-border-primary: #ebebeb;
+
+  --c-card-bg-primary: #ffffff;
+  --c-card__action: #666666;
+  --c-card__title: #666666;
+
+  --c-button-font: #0966c2;
+  --c-button-border: #0966c2;
+  --c-button-bg: #ffffff;
+
+  --c-closing-button-bg: rgba(0, 0, 0, 0.5);
+  --c-closing-button-inner: #f1f1f1;
+}
+
+/************************************************************************/
+
 .heading-wrapper {
   display: flex;
   justify-content: space-between;
@@ -30,12 +48,24 @@ main {
 .container-card {
   border-radius: 0.7rem;
   margin: 0.3rem 0.3rem;
-  background-color: #ffffff;
-  border: 2px solid #ebebeb;
+  background-color: var(--c-card-bg-primary);
+  border: 2px solid var(--c-border-primary);
   padding: 0.1rem 0.7rem;
-  width: 39rem;
+  _width: 39rem;
+  width: 360px;
 }
 
+@media screen and (min-width: 490px) {
+  .container-card {
+    width: 480px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .container-card {
+    width: 624px;
+  }
+}
 .container-card__heading {
   font-weight: 400;
   font-size: 1rem;
@@ -45,18 +75,31 @@ main {
 .container-card__action {
   font-size: 1rem;
   font-weight: 400;
-  color: #666666;
+  color: var(--c-card__action);
   margin: 0.5rem 0;
   text-decoration: none;
 }
 
 .card-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  _grid-template-columns: 1fr 1fr 1fr 1fr;
+  _grid-template-rows: 1fr 1fr;
   padding: 0;
   grid-gap: 0.5rem;
   margin: 0 0 1rem 0;
+}
+
+@media screen and (min-width: 490px) {
+  .card-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 680px) {
+  .card-list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }
 
 .extra-padding {
@@ -69,7 +112,7 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--c-border-primary);
   border-radius: 1rem;
   padding: 0.5rem;
   background-repeat: no-repeat;
@@ -94,12 +137,12 @@ main {
   font-size: 0.7rem;
   font-weight: 400;
   margin: 0;
-  color: #666666;
+  color: var(--c-card__title);
 }
 
 .person__mutual-connections {
   font-size: 0.6rem;
-  color: #666666;
+  color: var(--c-card__title);
   margin: 0;
 }
 
@@ -109,12 +152,12 @@ main {
 }
 
 .connect-button {
-  background-color: #ffffff;
-  border: 1px solid #0966c2;
+  background-color: var(--c-button-bg);
+  border: 1px solid var(--c-button-border);
   border-radius: 25px;
   padding: 0.2rem 2.5rem;
   font-size: 0.8rem;
-  color: #0966c2;
+  color: var(--c-button-font);
 }
 
 .remove-button {
@@ -123,9 +166,10 @@ main {
   right: 0.4rem;
   width: 1.5rem;
   height: 1.5rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--c-closing-button-bg);
   border-radius: 50px;
   border: none;
+  transition: 5ms;
 }
 
 .remove-button::before,
@@ -133,7 +177,7 @@ main {
   content: " ";
   position: absolute;
   display: block;
-  background-color: #f1f1f1;
+  background-color: var(--c-closing-button-inner);
   width: 1.5px;
   left: 0.7rem;
   top: 0.4rem;
@@ -148,31 +192,6 @@ main {
   transform: rotate(-45deg);
 }
 
-.button:hover {
-  border: 2px solid blue;
-  background-color: yellow;
-  color: #ffffff;
-}
-
-.button::before {
-  content: " ";
-  position: absolute;
-  display: block;
-  background-color: blue;
-  width: 2px;
-  left: 12px;
-  top: 5px;
-  bottom: 5px;
-  transform: rotate(45deg);
-}
-.button::after {
-  content: " ";
-  position: absolute;
-  display: block;
-  background-color: blue;
-  height: 2px;
-  top: 12px;
-  left: 5px;
-  right: 5px;
-  transform: rotate(45deg);
+.remove-button:hover {
+  transform: scale(1.1);
 }

@@ -90,7 +90,6 @@ function getMutualConnections(personData) {
 function addConnectButton() {
   const connectButton = document.createElement("button");
   connectButton.classList.add("connect-button");
-  connectButton.setAttribute("onclick", "www.google.com");
   connectButton.innerText = "Connect";
   connectButton.addEventListener("click", connectWithPerson);
   return connectButton;
