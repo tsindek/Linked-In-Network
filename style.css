@@ -11,56 +11,168 @@ body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: #f3f2ef;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .heading-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 2px dotted skyblue;
 }
 
 .container-card {
-  padding: 0.5rem;
-  border: 2px solid salmon;
+  border-radius: 0.7rem;
+  margin: 0.3rem 0.3rem;
+  background-color: #ffffff;
+  border: 2px solid #ebebeb;
+  padding: 0.1rem 0.7rem;
+  width: 39rem;
+}
+
+.container-card__heading {
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.container-card__action {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #666666;
+  margin: 0.5rem 0;
+  text-decoration: none;
 }
 
 .card-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  border: 2px dotted red;
-  margin: 0;
   padding: 0;
+  grid-gap: 0.5rem;
+  margin: 0 0 1rem 0;
+}
+
+.extra-padding {
+  padding: 0.5rem 0;
 }
 
 .person-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border: 2px solid #ebebeb;
-  border-radius: 7px;
+  border: 1px solid #ebebeb;
+  border-radius: 1rem;
   padding: 0.5rem;
-  margin: 0.5rem;
   background-repeat: no-repeat;
   background-position: top;
   background-size: 100% 25%;
+  height: 14rem;
+  width: 9rem;
 }
 
 .person__picture {
   border-radius: 50%;
+  width: 6rem;
 }
 
 .person__name {
   font-weight: 500;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.person__title {
+  font-size: 0.7rem;
+  font-weight: 400;
+  margin: 0;
+  color: #666666;
+}
+
+.person__mutual-connections {
+  font-size: 0.6rem;
+  color: #666666;
+  margin: 0;
+}
+
+.person__mutual-connections::before {
+  content: "\26AD";
+  font-size: 0.9rem;
+}
+
+.connect-button {
+  background-color: #ffffff;
+  border: 1px solid #0966c2;
+  border-radius: 25px;
+  padding: 0.2rem 2.5rem;
+  font-size: 0.8rem;
+  color: #0966c2;
 }
 
 .remove-button {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  border: none;
+}
+
+.remove-button::before,
+.remove-button::after {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: #f1f1f1;
+  width: 1.5px;
+  left: 0.7rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+}
+
+.remove-button::before {
+  transform: rotate(45deg);
+}
+
+.remove-button::after {
+  transform: rotate(-45deg);
+}
+
+.button:hover {
+  border: 2px solid blue;
+  background-color: yellow;
+  color: #ffffff;
+}
+
+.button::before {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: blue;
+  width: 2px;
+  left: 12px;
+  top: 5px;
+  bottom: 5px;
+  transform: rotate(45deg);
+}
+.button::after {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: blue;
+  height: 2px;
+  top: 12px;
+  left: 5px;
+  right: 5px;
+  transform: rotate(45deg);
 }

@@ -1,10 +1,5 @@
 /*todo
-- helper function for mutual connections
---> when more -> two rings symbol + n + "mutual connections"
-
--helper function for background image
---> when no bg image -> default image
---> when image -> use image
+-when card gets removed -> check for "pending" or "connect" ? 
 */
 
 const cardList = document.querySelector(".card-list");
@@ -12,27 +7,9 @@ const cardList = document.querySelector(".card-list");
 let personData = [];
 let numberOfInvitations = 0;
 
-getStoredNumberOfInvitations();
-function getStoredNumberOfInvitations() {
-  const inivitationsNumber = JSON.parse(
-    localStorage.getItem("numberOfInvitations")
-  );
-  numberOfInvitations = inivitationsNumber;
-}
 getPersonData(8);
+getStoredNumberOfInvitations();
 renderPendingInvitations(numberOfInvitations);
-
-function renderPendingInvitations(numberOfInvitations) {
-  const pendingInvitationsText = document.querySelector(
-    "#pending-invitations__text"
-  );
-  if (numberOfInvitations === 0) {
-    pendingInvitationsText.innerText = "No pending invitations";
-  } else if (numberOfInvitations > 0) {
-    pendingInvitationsText.innerText = `${numberOfInvitations} pending Invitations`;
-  }
-  storeNumberOfInvitations(numberOfInvitations);
-}
 
 function getPersonData(personCount) {
   fetch(
@@ -46,12 +23,6 @@ function getPersonData(personCount) {
     })
     .then((data) => (personData = data))
     .then(() => personData.forEach((element) => createPersonCard(element)));
-}
-
-function setAttributes(element, attributes) {
-  for (let key in attributes) {
-    element.setAttribute(key, attributes[key]);
-  }
 }
 
 function createPersonCard(personData) {
@@ -79,6 +50,12 @@ function createPersonCard(personData) {
   cardList.appendChild(personCard);
 }
 
+function setAttributes(element, attributes) {
+  for (let key in attributes) {
+    element.setAttribute(key, attributes[key]);
+  }
+}
+
 function getPersonPicture(personData) {
   const personPicture = document.createElement("img");
   setAttributes(personPicture, {
@@ -92,27 +69,28 @@ function getPersonPicture(personData) {
 function getPersonName(personData) {
   const personName = document.createElement("h3");
   personName.innerText = personData.name.first + "  " + personData.name.last;
-  personName.setAttribute("class", "person__name");
+  personName.classList.add("person__name");
   return personName;
 }
 
 function getPersonTitle(personData) {
   const personTitle = document.createElement("h4");
   personTitle.innerText = personData.title;
-  personTitle.setAttribute("class", "person__title");
+  personTitle.classList.add("person__title");
   return personTitle;
 }
 
 function getMutualConnections(personData) {
   const mutualConnections = document.createElement("p");
-  mutualConnections.innerText =
-    personData.mutualConnections + " mutual connections";
+  mutualConnections.innerText = ` ${personData.mutualConnections} mutual connections`;
+  mutualConnections.classList.add("person__mutual-connections");
   return mutualConnections;
 }
 
 function addConnectButton() {
   const connectButton = document.createElement("button");
-  connectButton.setAttribute("class", "connect-button");
+  connectButton.classList.add("connect-button");
+  connectButton.setAttribute("onclick", "www.google.com");
   connectButton.innerText = "Connect";
   connectButton.addEventListener("click", connectWithPerson);
   return connectButton;
@@ -120,8 +98,8 @@ function addConnectButton() {
 
 function addRemoveButton() {
   const removeButton = document.createElement("button");
-  removeButton.setAttribute("class", "remove-button");
-  removeButton.innerText = "X";
+  removeButton.classList.add("remove-button");
+  removeButton.innerText = "";
   removeButton.addEventListener("click", removeCard);
   return removeButton;
 }
@@ -150,4 +128,27 @@ function storeNumberOfInvitations(numberOfInvitations) {
     "numberOfInvitations",
     JSON.stringify(numberOfInvitations)
   );
+}
+
+function getStoredNumberOfInvitations() {
+  const inivitationsNumber = JSON.parse(
+    localStorage.getItem("numberOfInvitations")
+  );
+  if (inivitationsNumber === null) {
+    numberOfInvitations = 0;
+  } else {
+    numberOfInvitations = inivitationsNumber;
+  }
+}
+
+function renderPendingInvitations(numberOfInvitations) {
+  const pendingInvitationsText = document.querySelector(
+    "#pending-invitations__text"
+  );
+  if (numberOfInvitations === 0) {
+    pendingInvitationsText.innerText = "No pending invitations";
+  } else if (numberOfInvitations > 0) {
+    pendingInvitationsText.innerText = `${numberOfInvitations} pending Invitations`;
+  }
+  storeNumberOfInvitations(numberOfInvitations);
 }
